@@ -97,18 +97,6 @@ eval("var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!\n * jQ
 
 /***/ }),
 
-/***/ "./src/defaultProjectModule.mjs":
-/*!**************************************!*\
-  !*** ./src/defaultProjectModule.mjs ***!
-  \**************************************/
-/*! exports provided: defaultProjectModule */
-/***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"defaultProjectModule\", function() { return defaultProjectModule; });\nconst defaultProjectModule = (() => {\r\n\tconsole.log('Default Project');\r\n})();\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/defaultProjectModule.mjs?");
-
-/***/ }),
-
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -117,19 +105,43 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var _pageLayoutModule_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pageLayoutModule.mjs */ \"./src/pageLayoutModule.mjs\");\n/* harmony import */ var _defaultProjectModule_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./defaultProjectModule.mjs */ \"./src/defaultProjectModule.mjs\");\n\r\n\r\n\r\n$(function() {\r\n\tconsole.log('Index');\r\n});\r\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var _modules_pageLayoutModule_mjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/pageLayoutModule.mjs */ \"./src/modules/pageLayoutModule.mjs\");\n/* harmony import */ var _modules_table_mjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/table.mjs */ \"./src/modules/table.mjs\");\n/* harmony import */ var _modules_form_mjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/form.mjs */ \"./src/modules/form.mjs\");\n\n\n\n$(function () {\n  console.log('Index');\n});\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\")))\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
-/***/ "./src/pageLayoutModule.mjs":
-/*!**********************************!*\
-  !*** ./src/pageLayoutModule.mjs ***!
-  \**********************************/
+/***/ "./src/modules/form.mjs":
+/*!******************************!*\
+  !*** ./src/modules/form.mjs ***!
+  \******************************/
+/*! no exports provided */
+/***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nvar formModule = function () {\n  var formContainer = document.createElement('section');\n  console.log('Form Module');\n}();\n\n//# sourceURL=webpack:///./src/modules/form.mjs?");
+
+/***/ }),
+
+/***/ "./src/modules/pageLayoutModule.mjs":
+/*!******************************************!*\
+  !*** ./src/modules/pageLayoutModule.mjs ***!
+  \******************************************/
 /*! exports provided: pageLayoutModule */
 /***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"pageLayoutModule\", function() { return pageLayoutModule; });\nconst pageLayoutModule = (() => {\r\n\tconsole.log('Page Layout');\r\n})();\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./src/pageLayoutModule.mjs?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"pageLayoutModule\", function() { return pageLayoutModule; });\nvar pageLayoutModule = function () {\n  var htmlStyle = document.querySelector('html').style;\n  var myBody = document.querySelector('body');\n  var bodyStyle = myBody.style;\n  var myScript = document.querySelectorAll('script');\n  var pageContainer = document.createElement('div');\n  var headlineContainer = document.createElement('section');\n  var myHeadline = document.createElement('h1');\n  htmlStyle.maxWidth = '100vw';\n  htmlStyle.minWidth = '100vw';\n  htmlStyle.height = '100%';\n  htmlStyle.fontSize = '16px';\n  bodyStyle.width = '99%';\n  bodyStyle.height = '99%';\n  bodyStyle.margin = 'auto';\n  pageContainer.setAttribute('id', 'pageContainer');\n  pageContainer.style.height = '100%';\n  pageContainer.style.width = '100%';\n  pageContainer.style.margin = 'auto';\n  pageContainer.style.outline = '1px dashed green';\n  headlineContainer.setAttribute('id', 'headlineContainer');\n  headlineContainer.style.height = '4em';\n  headlineContainer.style.display = 'flex';\n  headlineContainer.style.position = 'relative';\n  headlineContainer.style.alignContent = 'center';\n  headlineContainer.style.outline = '1px dotted red';\n  myHeadline.setAttribute('id', 'myHeadline');\n  myHeadline.style.position = 'relative';\n  myHeadline.style.textAlign = 'center';\n  myHeadline.style.width = '5em';\n  myHeadline.style.display = 'inline-block';\n  myHeadline.style.fontSize = '3.5em';\n  myHeadline.style.height = '100%';\n  myHeadline.style.margin = 'auto';\n  myHeadline.style.outline = '1px solid blue';\n  myHeadline.textContent = 'ToDo List';\n  myBody.insertBefore(pageContainer, myScript[0]);\n  pageContainer.appendChild(headlineContainer);\n  headlineContainer.appendChild(myHeadline);\n  console.log('Page Layout');\n}();\n\n\n\n//# sourceURL=webpack:///./src/modules/pageLayoutModule.mjs?");
+
+/***/ }),
+
+/***/ "./src/modules/table.mjs":
+/*!*******************************!*\
+  !*** ./src/modules/table.mjs ***!
+  \*******************************/
+/*! no exports provided */
+/***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nvar tableModule = function () {\n  var tableContainer = document.createElement('section');\n  console.log('Table Module');\n}();\n\n//# sourceURL=webpack:///./src/modules/table.mjs?");
 
 /***/ })
 

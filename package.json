@@ -11,6 +11,9 @@
 	"author": "Dathan Spencer <dpspencer88@gmail.com>",
 	"license": "ISC",
 	"devDependencies": {
+		"@babel/core": "^7.1.2",
+		"babel-loader": "^8.0.4",
+		"babel-register": "^6.26.0",
 		"webpack": "^4.20.2",
 		"webpack-cli": "^3.1.2"
 	},
