@@ -20,26 +20,29 @@ const pageLayoutModule = (() => {
 	pageContainer.style.height = '100%';
 	pageContainer.style.width = '100%';
 	pageContainer.style.margin = 'auto';
-	pageContainer.style.outline = '1px dashed green';
+	//pageContainer.style.outline = '1px dashed green';
 
 	headlineContainer.setAttribute('id', 'headlineContainer');
 	headlineContainer.style.height = '4em';
+	headlineContainer.style.margin = '1.25em';
+	headlineContainer.style.padding = '1.25em';
 	headlineContainer.style.display = 'flex';
 	headlineContainer.style.position = 'relative';
 	headlineContainer.style.alignContent = 'center';
-	headlineContainer.style.outline = '1px dotted red';
+	//headlineContainer.style.outline = '1px dotted red';
+	//headlineContainer.style.backgroundColor = 'lightCoral';
 
 	myHeadline.setAttribute('id', 'myHeadline');
 	myHeadline.style.position = 'relative';
 	myHeadline.style.textAlign = 'center';
-	myHeadline.style.width = '5em';
+	myHeadline.style.width = '6em';
 	myHeadline.style.display = 'inline-block';
 	myHeadline.style.fontSize = '3.5em';
 	myHeadline.style.height = '100%';
 	myHeadline.style.margin = 'auto';
-	myHeadline.style.outline = '1px solid blue';
+	//myHeadline.style.outline = '1px solid blue';
 
-	myHeadline.textContent = 'ToDo List';
+	myHeadline.textContent = 'My ToDo List';
 
 	myBody.insertBefore(pageContainer, myScript[0]);
 	pageContainer.appendChild(headlineContainer);
