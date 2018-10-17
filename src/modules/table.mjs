@@ -1,9 +1,9 @@
 import $ from 'jquery';
-export const tableModule = (() => {
-	const projectFactory = (title, description, dueDate, priority, notes) => {
+const tableModule = (() => {
+	const projectFactory = (title, description, dueDate, priority) => {
 		const dateCreated = new Date().toLocaleString('en-US');
 
-		return { title, description, dateCreated, dueDate, priority, notes };
+		return { title, description, dateCreated, dueDate, priority };
 	};
 
 	const columnTitles = [
@@ -12,7 +12,6 @@ export const tableModule = (() => {
 		'Date Created',
 		'Due Date',
 		'Priority',
-		'Notes',
 		'Remove',
 	];
 
@@ -20,24 +19,21 @@ export const tableModule = (() => {
 		'Groceries',
 		'Eggs, Bacon, Milk',
 		new Date(2018, 11, 15).toLocaleDateString('en-US'),
-		'Yes',
-		'None for now'
+		'Yes'
 	);
 
 	const cleanHouse = projectFactory(
 		'Chores',
 		'Vacuum, Sweep',
 		new Date(2019, 3, 12).toLocaleDateString('en-US'),
-		'No',
-		'Do a good job'
+		'No'
 	);
 
 	const laundry = projectFactory(
 		'Laundry',
 		'Fold Clothes',
 		new Date(2018, 10, 28).toLocaleDateString('en-US'),
-		'Yes',
-		'Put away after'
+		'Yes'
 	);
 
 	const myProjects = [groceries, cleanHouse, laundry];
@@ -47,10 +43,9 @@ export const tableModule = (() => {
 		const myTable = document.createElement('table');
 
 		tableContainer.setAttribute('id', 'tableContainer');
-		tableContainer.style.margin = '1.25em';
-		tableContainer.style.padding = '1.25em';
+		tableContainer.style.margin = '0px 1.25em';
+		tableContainer.style.padding = '1em';
 		tableContainer.style.height = '15em';
-		//tableContainer.style.backgroundColor = 'skyBlue';
 
 		myTable.setAttribute('id', 'myTable');
 		myTable.style.margin = 'auto';
@@ -70,6 +65,7 @@ export const tableModule = (() => {
 	function renderTableHead() {
 		const tableHead = document.createElement('thead');
 		tableHead.setAttribute('id', 'tableHead');
+
 		const headRow = document.createElement('tr');
 		headRow.setAttribute('id', 'headRow');
 
@@ -79,6 +75,8 @@ export const tableModule = (() => {
 
 			headerCell.setAttribute('id', titleName.toLowerCase());
 			headerCell.style.border = '1px solid black';
+			headerCell.style.fontSize = '1.75em';
+			headerCell.style.letterSpacing = '.035em';
 			headerCell.textContent = titleName;
 
 			headRow.appendChild(headerCell);
@@ -94,8 +92,6 @@ export const tableModule = (() => {
 		tableBody.setAttribute('id', 'tableBody');
 
 		myProjects.forEach((item, index) => {
-			console.log(item + ' and ' + index);
-
 			const row = tableBody.insertRow(index);
 			row.setAttribute('id', item.title);
 			row.setAttribute('class', 'rows');
@@ -105,6 +101,8 @@ export const tableModule = (() => {
 				projectData.style.fontSize = '1.5em';
 				projectData.style.border = '1px solid black';
 				projectData.style.textAlign = 'center';
+				projectData.style.letterSpacing = '.055em';
+				projectData.style.textShadow = '-0.025em 0 black';
 
 				projectData.textContent = item[key];
 
@@ -121,13 +119,18 @@ export const tableModule = (() => {
 			removeBtn.setAttribute('class', 'removeBtn');
 			removeBtn.style.height = '100%';
 			removeBtn.style.width = '100%';
-			removeBtn.style.fontSize = '2em';
+			removeBtn.style.fontSize = '2.5em';
+			removeBtn.style.textShadow = '-0.065em 0 black';
 			removeBtn.textContent = 'X';
 
 			remove.append(removeBtn);
 		});
 
 		myTable.appendChild(tableBody);
+		addEvents();
+	}
+
+	function addEvents() {
 		$('tr:odd').css('backgroundColor', 'skyBlue');
 		$('tr:even').css('backgroundColor', 'lightCyan');
 		$('.rows')
@@ -138,8 +141,22 @@ export const tableModule = (() => {
 				$('tr:odd').css({ backgroundColor: 'skyBlue', color: 'black' });
 				$('tr:even').css({ backgroundColor: 'lightCyan', color: 'black' });
 			});
+
+		$('.removeBtn')
+			.mouseenter(function() {
+				$(this).css({ backgroundColor: 'black', color: 'white' });
+			})
+			.mouseleave(function() {
+				$(this).css({ backgroundColor: 'buttonface', color: 'buttontext' });
+			});
 	}
+
+	/*function renderTableFoot(){
+		have footer display summary info for above
+	}*/
 
 	console.log('Table Module');
 	createTable();
 })();
+
+export { tableModule };
