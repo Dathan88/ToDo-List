@@ -1,6 +1,6 @@
 import $ from 'jquery';
-const formModule = (() => {
-	let count = 0;
+const formModule = () => {
+	//let count = 0;
 
 	function createFormOutline() {
 		const formContainer = document.createElement('section');
@@ -9,15 +9,14 @@ const formModule = (() => {
 		formContainer.setAttribute('id', 'formContainer');
 		formContainer.style.margin = 'auto';
 		formContainer.style.padding = '1em';
-		formContainer.style.width = '50%';
-		formContainer.style.height = '21em';
+		formContainer.style.width = '40%';
 
 		myForm.setAttribute('id', 'myForm');
 		myForm.setAttribute('name', 'myForm');
 		myForm.style.margin = 'auto';
 		myForm.style.width = '85%';
 		myForm.style.height = '100%';
-		myForm.style.border = '1px solid black';
+		//myForm.style.border = '1px solid black';
 		myForm.style.textAlign = 'center';
 
 		pageContainer.appendChild(formContainer);
@@ -31,7 +30,7 @@ const formModule = (() => {
 		const categoryLabel = ['Title', 'Description', 'Due Date'];
 
 		const innerForm = document.createElement('section');
-		const formTitle = document.createElement('h2');
+		//const formTitle = document.createElement('h2');
 		const fieldSet = document.createElement('fieldset');
 		const legend = document.createElement('legend');
 		const priorityContainer = document.createElement('p');
@@ -43,10 +42,11 @@ const formModule = (() => {
 		innerForm.style.height = '94%';
 		innerForm.style.margin = '.75em auto';
 
-		formTitle.setAttribute('id', 'formTitle');
-		formTitle.style.margin = 'auto';
-		formTitle.style.textAlign = 'center';
-		formTitle.textContent = 'Add New Projects';
+		// formTitle.setAttribute('id', 'formTitle');
+		// formTitle.style.margin = 'auto';
+		// formTitle.style.textAlign = 'center';
+		//formTitle.style.fontSize= '1em';
+		//formTitle.textContent = 'Add New Projects';
 
 		legend.setAttribute('id', 'legend');
 		legend.style.textAlign = 'center';
@@ -73,7 +73,7 @@ const formModule = (() => {
 		noPriority.textContent = 'No';
 
 		myForm.appendChild(innerForm);
-		innerForm.appendChild(formTitle);
+		//innerForm.appendChild(formTitle);
 		innerForm.appendChild(fieldSet);
 		fieldSet.appendChild(legend);
 
@@ -97,9 +97,9 @@ const formModule = (() => {
 			inputContainer.append(inputLabel);
 			inputLabel.appendChild(myInput);
 
-			console.log(item + ' = ' + index);
-			count++;
-			return count;
+			//console.log(item + ' = ' + index);
+			//count++;
+			//return count;
 		});
 		fieldSet.appendChild(priorityContainer);
 		priorityContainer.appendChild(priorityLabel);
@@ -109,6 +109,7 @@ const formModule = (() => {
 
 	console.log('Form Module');
 	createFormOutline();
-})();
+};
 
+document.addEventListener('DOMContentLoaded', formModule);
 export { formModule };

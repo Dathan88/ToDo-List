@@ -1,7 +1,7 @@
 import $ from 'jquery';
-const tableModule = (() => {
+const tableModule = () => {
 	const projectFactory = (title, description, dueDate, priority) => {
-		const dateCreated = new Date().toLocaleString('en-US');
+		const dateCreated = new Date().toLocaleDateString('en-US');
 
 		return { title, description, dateCreated, dueDate, priority };
 	};
@@ -36,25 +36,31 @@ const tableModule = (() => {
 		'Yes'
 	);
 
-	const myProjects = [groceries, cleanHouse, laundry];
+	const rent = projectFactory(
+		'Pay Rent',
+		'Mail Check',
+		new Date(2018, 10, 1).toLocaleDateString('en-US'),
+		'Yes'
+	);
+
+	const myProjects = [];
 
 	function createTable() {
+		myProjects.push(groceries, cleanHouse, laundry, rent);
 		const tableContainer = document.createElement('section');
 		const myTable = document.createElement('table');
 
 		tableContainer.setAttribute('id', 'tableContainer');
 		tableContainer.style.margin = '0px 1.25em';
 		tableContainer.style.padding = '1em';
-		tableContainer.style.height = '15em';
 
 		myTable.setAttribute('id', 'myTable');
 		myTable.style.margin = 'auto';
-		myTable.style.height = '100%';
 		myTable.style.width = '90%';
-		myTable.style.display = 'table';
 		myTable.style.border = '1px solid black';
 		myTable.style.borderSpacing = '0px';
 		myTable.style.borderCollapse = 'collapse';
+		myTable.style.tableLayout = 'fixed';
 
 		pageContainer.appendChild(tableContainer);
 		tableContainer.appendChild(myTable);
@@ -75,8 +81,15 @@ const tableModule = (() => {
 
 			headerCell.setAttribute('id', titleName.toLowerCase());
 			headerCell.style.border = '1px solid black';
+			headerCell.style.backgroundColor = '#073B4C';
+			headerCell.style.color = 'white';
 			headerCell.style.fontSize = '1.75em';
 			headerCell.style.letterSpacing = '.035em';
+			headerCell.style.fontVariant = 'small-caps';
+			headerCell.style.fontTransform = 'capitalize';
+			headerCell.style.fontFamily = 'Arial';
+			headerCell.style.fontWeight = '500';
+			//headerCell.style.textShadow = '-0.025em 0 black';
 			headerCell.textContent = titleName;
 
 			headRow.appendChild(headerCell);
@@ -95,14 +108,13 @@ const tableModule = (() => {
 			const row = tableBody.insertRow(index);
 			row.setAttribute('id', item.title);
 			row.setAttribute('class', 'rows');
+			row.style.height = '2.5em';
 
 			for (const key in item) {
 				const projectData = row.insertCell();
-				projectData.style.fontSize = '1.5em';
+				projectData.style.fontSize = '150%';
 				projectData.style.border = '1px solid black';
 				projectData.style.textAlign = 'center';
-				projectData.style.letterSpacing = '.055em';
-				projectData.style.textShadow = '-0.025em 0 black';
 
 				projectData.textContent = item[key];
 
@@ -116,10 +128,12 @@ const tableModule = (() => {
 			row.insertAdjacentElement('beforeend', remove);
 
 			const removeBtn = document.createElement('button');
+			removeBtn.setAttribute('id', item.title + 'Btn');
 			removeBtn.setAttribute('class', 'removeBtn');
-			removeBtn.style.height = '100%';
+			removeBtn.style.height = '1.75em';
 			removeBtn.style.width = '100%';
 			removeBtn.style.fontSize = '2.5em';
+			removeBtn.style.backgroundColor = '#FFD166';
 			removeBtn.style.textShadow = '-0.065em 0 black';
 			removeBtn.textContent = 'X';
 
@@ -127,36 +141,62 @@ const tableModule = (() => {
 		});
 
 		myTable.appendChild(tableBody);
-		addEvents();
-	}
-
-	function addEvents() {
-		$('tr:odd').css('backgroundColor', 'skyBlue');
-		$('tr:even').css('backgroundColor', 'lightCyan');
-		$('.rows')
-			.mouseenter(function() {
-				$(this).css({ backgroundColor: 'dodgerBlue', color: 'white' });
-			})
-			.mouseleave(function() {
-				$('tr:odd').css({ backgroundColor: 'skyBlue', color: 'black' });
-				$('tr:even').css({ backgroundColor: 'lightCyan', color: 'black' });
-			});
-
-		$('.removeBtn')
-			.mouseenter(function() {
-				$(this).css({ backgroundColor: 'black', color: 'white' });
-			})
-			.mouseleave(function() {
-				$(this).css({ backgroundColor: 'buttonface', color: 'buttontext' });
-			});
+		rowFx(), removeProject();
 	}
 
 	/*function renderTableFoot(){
 		have footer display summary info for above
 	}*/
 
+	function rowFx() {
+		$('tr:odd').css('backgroundColor', '#118AB2');
+		$('tr:even').css('backgroundColor', '#06D6A0');
+		$('.rows')
+			.mouseenter(function() {
+				$(this).css({
+					backgroundColor: '#EF476F',
+					color: 'black',
+					/* textShadow:
+						'-0.0625em 0 black, 0 0.0625em black, 0.0625em 0 black, 0 -0.0625em black' */
+				}),
+					$(this.lastChild.firstChild).css({
+						backgroundColor: 'black',
+						color: 'white',
+					});
+			})
+			.mouseleave(function() {
+				$('tr:odd').css({
+					backgroundColor: '#118AB2',
+					color: 'black',
+					textShadow: 'none',
+				});
+				$('tr:even').css({
+					backgroundColor: '#06D6A0',
+					color: 'black',
+					textShadow: 'none',
+				}),
+					$('.removeBtn').css({
+						backgroundColor: '#FFD166',
+						color: 'black',
+					});
+			});
+	}
+
+	function removeProject() {
+		const btns = document.querySelectorAll('.removeBtn');
+
+		btns.forEach(button => {
+			button.addEventListener('click', e => {
+				const i = e.target.parentNode.parentNode.rowIndex;
+				console.log(i);
+				document.querySelector('#myTable').deleteRow(i);
+			});
+		});
+	}
+
 	console.log('Table Module');
 	createTable();
-})();
+};
 
+document.addEventListener('DOMContentLoaded', tableModule);
 export { tableModule };

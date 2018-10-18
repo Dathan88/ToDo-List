@@ -1,17 +1,17 @@
 import $ from 'jquery';
-const pageLayoutModule = (() => {
-	function createPageOutline() {
+const pageLayoutModule = {
+	createPageOutline: function() {
 		const htmlStyle = document.querySelector('html').style;
-		const bodyStyle = document.querySelector('body').style;
 		const myScript = document.querySelectorAll('script');
 		const pageContainer = document.createElement('div');
 		const headlineContainer = document.createElement('section');
 		const myHeadline = document.createElement('h1');
 
-		htmlStyle.width = '99.5em';
+		htmlStyle.width = '100%';
 		htmlStyle.maxWidth = '100vw';
 		htmlStyle.height = '56em';
 		htmlStyle.maxHeight = '100vh';
+		htmlStyle.fontFamily = 'Arial';
 
 		pageContainer.setAttribute('id', 'pageContainer');
 		pageContainer.style.height = '100%';
@@ -27,10 +27,9 @@ const pageLayoutModule = (() => {
 		myHeadline.setAttribute('id', 'myHeadline');
 		myHeadline.style.position = 'relative';
 		myHeadline.style.textAlign = 'center';
-		myHeadline.style.width = '6em';
+		myHeadline.style.width = '7em';
 		myHeadline.style.display = 'inline-block';
-		myHeadline.style.fontSize = '3.5em';
-		myHeadline.style.height = '100%';
+		myHeadline.style.fontSize = '2.5em';
 		myHeadline.style.margin = 'auto';
 
 		myHeadline.textContent = 'My ToDo List';
@@ -38,10 +37,13 @@ const pageLayoutModule = (() => {
 		document.body.insertBefore(pageContainer, myScript[0]);
 		pageContainer.appendChild(headlineContainer);
 		headlineContainer.appendChild(myHeadline);
-	}
+	},
+};
 
-	console.log('Page Layout');
-	createPageOutline();
-})();
+console.log('Page Layout');
 
+document.addEventListener(
+	'DOMContentLoaded',
+	pageLayoutModule.createPageOutline
+);
 export { pageLayoutModule };
