@@ -1,50 +1,11 @@
+import { pfModule } from './modules/projectFactory.mjs';
+import { removeProject } from './modules/removeProject.mjs';
+import { addProjectModule } from './modules/addProject.mjs';
+
+console.log(pfModule);
+
 $(function() {
-	let count = 0;
-	const categoryID = ['projectTitle', 'projectDesc', 'projectDue'];
-	const categoryLabel = ['Title', 'Description', 'Due Date'];
-	const myProjects = [];
-	const columnTitles = [
-		'Title',
-		'Description',
-		'Date Created',
-		'Due Date',
-		'Priority',
-		'Remove',
-	];
-
-	const projectFactory = (title, description, dueDate, priority) => {
-		const dateCreated = new Date().toLocaleDateString('en-US');
-
-		return { title, description, dateCreated, dueDate, priority };
-	};
-
-	const groceries = projectFactory(
-		'Groceries',
-		'Eggs, Bacon, Milk',
-		new Date(2018, 11, 15).toLocaleDateString('en-US'),
-		'Yes'
-	);
-
-	const cleanHouse = projectFactory(
-		'Chores',
-		'Vacuum, Sweep',
-		new Date(2019, 9, 24).toLocaleDateString('en-US'),
-		'No'
-	);
-
-	const laundry = projectFactory(
-		'Laundry',
-		'Fold Clothes',
-		new Date(2018, 10, 28).toLocaleDateString('en-US'),
-		'Yes'
-	);
-
-	const rent = projectFactory(
-		'Pay Rent',
-		'Mail Check',
-		new Date(2018, 10, 1).toLocaleDateString('en-US'),
-		'Yes'
-	);
+	console.log(pfModule.myProjects);
 
 	(function pageOutline() {
 		const htmlStyle = document.querySelector('html').style;
@@ -63,7 +24,7 @@ $(function() {
 		pageContainer.style.margin = 'auto';
 
 		headlineContainer.setAttribute('id', 'headlineContainer');
-		headlineContainer.style.height = '4em';
+		//headlineContainer.style.height = '4em';
 		headlineContainer.style.padding = '.5em 1.25em 0px';
 		headlineContainer.style.display = 'flex';
 		headlineContainer.style.position = 'relative';
@@ -73,7 +34,7 @@ $(function() {
 		myHeadline.style.textAlign = 'center';
 		myHeadline.style.width = '7em';
 		myHeadline.style.display = 'inline-block';
-		myHeadline.style.fontSize = '2.5em';
+		myHeadline.style.fontSize = '2.3em';
 		myHeadline.style.margin = 'auto';
 
 		myHeadline.textContent = 'My ToDo List';
@@ -84,7 +45,6 @@ $(function() {
 	})();
 
 	(function tableOutline() {
-		myProjects.push(groceries, cleanHouse, laundry, rent);
 		const tableContainer = document.createElement('section');
 		const myTable = document.createElement('table');
 
@@ -107,11 +67,20 @@ $(function() {
 	})();
 
 	function tableHeader() {
+		const columnTitles = [
+			'Title',
+			'Description',
+			'Date Created',
+			'Due Date',
+			'Priority',
+			'Remove',
+		];
 		const tableHead = document.createElement('thead');
 		tableHead.setAttribute('id', 'tableHead');
 
 		const headRow = document.createElement('tr');
 		headRow.setAttribute('id', 'headRow');
+		headRow.setAttribute('class', 'rows');
 
 		columnTitles.forEach(item => {
 			const headerCell = document.createElement('th');
@@ -121,7 +90,7 @@ $(function() {
 			headerCell.style.border = '1px solid black';
 			headerCell.style.backgroundColor = '#073B4C';
 			headerCell.style.color = 'white';
-			headerCell.style.fontSize = '1.75em';
+			headerCell.style.fontSize = '1.3em';
 			headerCell.style.letterSpacing = '.035em';
 			headerCell.style.fontVariant = 'small-caps';
 			headerCell.style.fontTransform = 'capitalize';
@@ -135,58 +104,55 @@ $(function() {
 
 		myTable.appendChild(tableHead);
 		tableHead.appendChild(headRow);
-		renderTableBody();
+		tableContent();
 	}
 
-	function renderTableBody() {
-		const tableBody = document.createElement('tbody');
-		tableBody.setAttribute('id', 'tableBody');
+	function tableContent() {
+		const tbody = document.createElement('tbody');
+		tbody.setAttribute('id', 'tbody');
 
-		myProjects.forEach((item, index) => {
-			const row = tableBody.insertRow(index);
-			row.setAttribute('id', item.title);
-			row.setAttribute('class', 'rows');
-			row.style.height = '2.5em';
+		pfModule.myProjects.forEach((item, index) => {
+			const tBodyRow = tbody.insertRow(index);
+			tBodyRow.setAttribute('id', item.title);
+			tBodyRow.setAttribute('class', 'rows');
 
 			for (const key in item) {
-				const projectData = row.insertCell();
-				projectData.style.fontSize = '150%';
+				const projectData = tBodyRow.insertCell();
+
 				projectData.style.border = '1px solid black';
 				projectData.style.textAlign = 'center';
-
 				projectData.textContent = item[key];
-
-				//console.log(item[key] + ' - ' + key);
 			}
 
 			const remove = document.createElement('td');
 			remove.style.padding = '0px';
 			remove.style.margin = 'auto';
 			remove.style.border = '1px solid black';
-			row.insertAdjacentElement('beforeend', remove);
+			tBodyRow.insertAdjacentElement('beforeend', remove);
 
 			const removeBtn = document.createElement('button');
 			removeBtn.setAttribute('id', item.title + 'Btn');
 			removeBtn.setAttribute('class', 'removeBtn');
-			removeBtn.style.height = '1.75em';
+			//removeBtn.style.height = '1.75em';
 			removeBtn.style.width = '100%';
-			removeBtn.style.fontSize = '2.5em';
+			removeBtn.style.fontSize = '2em';
 			removeBtn.style.backgroundColor = '#FFD166';
 			removeBtn.style.textShadow = '-0.065em 0 black';
 			removeBtn.textContent = 'X';
 
+			removeBtn.addEventListener('click', e => {
+				removeProject.btnEvent(e, pfModule.myProjects);
+			});
+
 			remove.append(removeBtn);
 		});
 
-		myTable.appendChild(tableBody);
-		tableFx(), removeProject();
+		myTable.appendChild(tbody);
+		tableFx();
 	}
 
-	/*function renderTableFoot(){
-		have footer display summary info for above
-	}*/
-
 	function tableFx() {
+		//removeProject;
 		$('tr:odd').css('backgroundColor', '#118AB2');
 		$('tr:even').css('backgroundColor', '#06D6A0');
 		$('.rows')
@@ -194,8 +160,6 @@ $(function() {
 				$(this).css({
 					backgroundColor: '#EF476F',
 					color: 'black',
-					/* textShadow:
-						'-0.0625em 0 black, 0 0.0625em black, 0.0625em 0 black, 0 -0.0625em black' */
 				}),
 					$(this.lastChild.firstChild).css({
 						backgroundColor: 'black',
@@ -220,18 +184,6 @@ $(function() {
 			});
 	}
 
-	function removeProject() {
-		const btns = document.querySelectorAll('.removeBtn');
-
-		btns.forEach(button => {
-			button.addEventListener('click', e => {
-				const i = e.target.parentNode.parentNode.rowIndex;
-				console.log(i);
-				document.querySelector('#myTable').deleteRow(i);
-			});
-		});
-	}
-
 	(function formOutline() {
 		const formContainer = document.createElement('section');
 		const myForm = document.createElement('form');
@@ -248,9 +200,37 @@ $(function() {
 		myForm.style.height = '100%';
 		myForm.style.textAlign = 'center';
 
+		myForm.onsubmit = e => {
+			e.preventDefault();
+
+			console.log(pfModule.myProjects);
+
+			const tbody = document.getElementById('tbody');
+			const title = document.querySelector('input[name="title"]').value;
+			const description = document.querySelector('input[name="description"]')
+				.value;
+			const dueDate = document.querySelector('input[name="dueDate"]').value;
+			const priority = document.querySelector('input[name="priority"]:checked')
+				.value;
+
+			addProjectModule.submitProject(
+				pfModule.myProjects,
+				pfModule.projectFactory,
+				title,
+				description,
+				dueDate,
+				priority
+			);
+			console.log(pfModule.myProjects);
+
+			myForm.reset();
+			tbody.remove();
+			tableContent();
+			document.getElementById('priorityYes').checked = true;
+		};
+
 		pageContainer.appendChild(formContainer);
 		formContainer.appendChild(myForm);
-
 		formLayout();
 	})();
 
@@ -258,7 +238,12 @@ $(function() {
 		const fieldSet = document.createElement('fieldset');
 		const legend = document.createElement('legend');
 		const priorityContainer = document.createElement('p');
+		const priorityYesLabel = document.createElement('label');
+		const priorityNoLabel = document.createElement('label');
+		const priorityYes = document.createElement('input');
+		const priorityNo = document.createElement('input');
 
+		// fieldSet and legend config
 		fieldSet.setAttribute('id', 'fieldSet');
 		fieldSet.style.width = '80%';
 		fieldSet.style.height = '80%';
@@ -270,42 +255,44 @@ $(function() {
 		legend.textContent = 'Project Details';
 		fieldSet.appendChild(legend);
 
+		// priority config
 		priorityContainer.textContent = 'Priority: ';
 		fieldSet.appendChild(priorityContainer);
 
-		for (let i = 0; i < 2; i++) {
-			const priorityLabel = document.createElement('label');
-			const priority = document.createElement('input');
-			if (i === 0) {
-				priorityLabel.setAttribute('for', 'yesPriority');
-				priorityLabel.textContent = 'Yes';
+		priorityYesLabel.setAttribute('for', 'yes');
+		priorityYesLabel.textContent = 'Yes';
 
-				priority.setAttribute('id', 'yesPriority');
-				priority.setAttribute('name', 'yesPriority');
-				priority.setAttribute('type', 'radio');
-				priority.setAttribute('value', 'Yes');
-				priority.textContent = 'Yes';
+		priorityYes.setAttribute('id', 'priorityYes');
+		priorityYes.setAttribute('name', 'priority');
+		priorityYes.setAttribute('type', 'radio');
+		priorityYes.setAttribute('value', 'yes');
+		priorityYes.checked = true;
+		priorityYes.value = 'yes';
+		priorityYes.textContent = 'Yes';
 
-				priorityContainer.appendChild(priorityLabel);
-				priorityLabel.appendChild(priority);
-			} else if (i === 1) {
-				priorityLabel.setAttribute('for', 'noPriority');
-				priorityLabel.textContent = 'No';
+		priorityContainer.appendChild(priorityYesLabel);
+		priorityYesLabel.appendChild(priorityYes);
 
-				priority.setAttribute('id', 'noPriority');
-				priority.setAttribute('name', 'noPriority');
-				priority.setAttribute('type', 'radio');
-				priority.setAttribute('value', 'No');
-				priority.textContent = 'No';
+		priorityNoLabel.setAttribute('for', 'no');
+		priorityNoLabel.textContent = 'No';
 
-				priorityContainer.appendChild(priorityLabel);
-				priorityLabel.appendChild(priority);
-			}
-		}
+		priorityNo.setAttribute('id', 'priorityNo');
+		priorityNo.setAttribute('name', 'priority');
+		priorityNo.setAttribute('type', 'radio');
+		priorityNo.setAttribute('value', 'no');
+		priorityNo.value = 'no';
+		priorityNo.textContent = 'No';
+
+		priorityContainer.appendChild(priorityNoLabel);
+		priorityNoLabel.appendChild(priorityNo);
+
 		formContent();
 	}
 
 	function formContent() {
+		const categoryLabel = ['Title', 'Description', 'Due Date'];
+		const categoryID = ['title', 'description', 'dueDate'];
+
 		categoryID.forEach((item, index) => {
 			const inputContainer = document.createElement('p');
 			const myInput = document.createElement('input');
@@ -313,71 +300,64 @@ $(function() {
 
 			fieldSet.appendChild(inputContainer);
 
-			if (count === 2) {
+			if (item === 'dueDate') {
 				//duedate
 				inputLabel.setAttribute('for', item);
 				inputLabel.textContent = categoryLabel[index] + ': ';
 
 				myInput.setAttribute('id', item);
+				myInput.setAttribute('name', item);
 				myInput.setAttribute('type', 'date');
 
 				inputContainer.appendChild(inputLabel);
-				inputLabel.appendChild(myInput);
+				inputContainer.appendChild(myInput);
 			} else {
 				inputLabel.setAttribute('for', item);
 				inputLabel.textContent = categoryLabel[index] + ': ';
 
 				myInput.setAttribute('id', item);
+				myInput.setAttribute('name', item);
 				myInput.setAttribute('type', 'text');
-				myInput.setAttribute('autocomplete', 'off');
+				//myInput.setAttribute('autocomplete', 'off');
 
 				inputContainer.appendChild(inputLabel);
-				inputLabel.appendChild(myInput);
+				inputContainer.appendChild(myInput);
 			}
-
 			//console.log(item + ' = ' + index);
-			count++;
-			return count;
 		});
-		formButton();
+		formButtons();
 	}
 
-	function formButton() {
-		const submitContainer = document.createElement('section');
-		const submitBtn = document.createElement('button');
+	function formButtons() {
+		const formBtnContainer = document.createElement('section');
+		const submitBtn = document.createElement('input');
+		const resetBtn = document.createElement('input');
 
-		submitContainer.setAttribute('id', 'submitContainer');
-		submitContainer.style.margin = 'auto';
-		submitContainer.style.width = '25%';
+		formBtnContainer.setAttribute('id', 'formBtnContainer');
+		formBtnContainer.style.margin = 'auto';
+		formBtnContainer.style.width = '25%';
 
 		submitBtn.setAttribute('id', 'submitBtn');
+		submitBtn.setAttribute('type', 'submit');
 		submitBtn.style.margin = 'auto';
 		submitBtn.style.fontSize = '16px';
 		submitBtn.style.height = '2em';
-		submitBtn.textContent = 'Add To List';
+		submitBtn.value = 'Submit Project';
 
-		submitBtn.addEventListener('click', e => {
-			e.preventDefault();
-			addProject();
-		});
+		resetBtn.setAttribute('id', 'resetBtn');
+		resetBtn.setAttribute('type', 'button');
+		resetBtn.style.margin = 'auto';
+		resetBtn.style.fontSize = '16px';
+		resetBtn.style.height = '2em';
+		resetBtn.value = 'Reset';
 
-		fieldSet.appendChild(submitContainer);
-		submitContainer.append(submitBtn);
+		resetBtn.onclick = () => {
+			document.getElementById('myForm').reset();
+			document.getElementById('priorityYes').checked = true;
+		};
+
+		fieldSet.appendChild(formBtnContainer);
+		formBtnContainer.append(submitBtn);
+		formBtnContainer.append(resetBtn);
 	}
-
-	function addProject(e) {
-		console.log('Added');
-	}
-
-	/* 
-	function myIndex() {
-		const myClick = document.querySelector('*');
-	
-		myClick.addEventListener('click', e => {
-			const titleChange = document.querySelector('#myHeadline');
-			titleChange.textContent = e.target.tagName;
-			//console.log(e.target);
-		});
-	} 
-	myIndex();*/
 });
