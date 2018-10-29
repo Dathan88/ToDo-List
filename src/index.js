@@ -1,12 +1,11 @@
 import { pfModule } from './modules/projectFactory.mjs';
 import { removeProject } from './modules/removeProject.mjs';
 import { addProjectModule } from './modules/addProject.mjs';
+//import { formStorageModule } from './modules/formStorage.mjs';
 
-console.log(pfModule);
+//console.log();
 
 $(function() {
-	console.log(pfModule.myProjects);
-
 	(function pageOutline() {
 		const htmlStyle = document.querySelector('html').style;
 		const myScript = document.querySelectorAll('script');
@@ -70,7 +69,6 @@ $(function() {
 		const columnTitles = [
 			'Title',
 			'Description',
-			'Date Created',
 			'Due Date',
 			'Priority',
 			'Remove',
@@ -242,6 +240,7 @@ $(function() {
 		const priorityNoLabel = document.createElement('label');
 		const priorityYes = document.createElement('input');
 		const priorityNo = document.createElement('input');
+		const br = document.createElement('br');
 
 		// fieldSet and legend config
 		fieldSet.setAttribute('id', 'fieldSet');
@@ -256,8 +255,11 @@ $(function() {
 		fieldSet.appendChild(legend);
 
 		// priority config
-		priorityContainer.textContent = 'Priority: ';
+		priorityContainer.style.margin = '.5em auto auto';
+		priorityContainer.textContent = 'Priority:';
+		//priorityContainer.style.textDecorationLine = 'underline';
 		fieldSet.appendChild(priorityContainer);
+		priorityContainer.appendChild(br);
 
 		priorityYesLabel.setAttribute('for', 'yes');
 		priorityYesLabel.textContent = 'Yes';
@@ -265,9 +267,8 @@ $(function() {
 		priorityYes.setAttribute('id', 'priorityYes');
 		priorityYes.setAttribute('name', 'priority');
 		priorityYes.setAttribute('type', 'radio');
-		priorityYes.setAttribute('value', 'yes');
 		priorityYes.checked = true;
-		priorityYes.value = 'yes';
+		priorityYes.value = 'Yes';
 		priorityYes.textContent = 'Yes';
 
 		priorityContainer.appendChild(priorityYesLabel);
@@ -279,8 +280,7 @@ $(function() {
 		priorityNo.setAttribute('id', 'priorityNo');
 		priorityNo.setAttribute('name', 'priority');
 		priorityNo.setAttribute('type', 'radio');
-		priorityNo.setAttribute('value', 'no');
-		priorityNo.value = 'no';
+		priorityNo.value = 'No';
 		priorityNo.textContent = 'No';
 
 		priorityContainer.appendChild(priorityNoLabel);
@@ -295,6 +295,7 @@ $(function() {
 
 		categoryID.forEach((item, index) => {
 			const inputContainer = document.createElement('p');
+			const br = document.createElement('br');
 			const myInput = document.createElement('input');
 			const inputLabel = document.createElement('label');
 
@@ -303,24 +304,30 @@ $(function() {
 			if (item === 'dueDate') {
 				//duedate
 				inputLabel.setAttribute('for', item);
+				inputLabel.textAlign = 'left';
 				inputLabel.textContent = categoryLabel[index] + ': ';
 
 				myInput.setAttribute('id', item);
 				myInput.setAttribute('name', item);
 				myInput.setAttribute('type', 'date');
+				myInput.required = true;
 
 				inputContainer.appendChild(inputLabel);
+				inputContainer.appendChild(br);
 				inputContainer.appendChild(myInput);
 			} else {
 				inputLabel.setAttribute('for', item);
+				inputLabel.textAlign = 'left';
 				inputLabel.textContent = categoryLabel[index] + ': ';
 
 				myInput.setAttribute('id', item);
 				myInput.setAttribute('name', item);
 				myInput.setAttribute('type', 'text');
-				//myInput.setAttribute('autocomplete', 'off');
+				myInput.required = true;
+				myInput.setAttribute('autocomplete', 'off');
 
 				inputContainer.appendChild(inputLabel);
+				inputContainer.appendChild(br);
 				inputContainer.appendChild(myInput);
 			}
 			//console.log(item + ' = ' + index);
@@ -335,20 +342,24 @@ $(function() {
 
 		formBtnContainer.setAttribute('id', 'formBtnContainer');
 		formBtnContainer.style.margin = 'auto';
-		formBtnContainer.style.width = '25%';
+		formBtnContainer.style.width = '70%';
 
 		submitBtn.setAttribute('id', 'submitBtn');
 		submitBtn.setAttribute('type', 'submit');
-		submitBtn.style.margin = 'auto';
+		submitBtn.style.margin = 'auto 2%';
+		submitBtn.style.padding = '0px';
 		submitBtn.style.fontSize = '16px';
 		submitBtn.style.height = '2em';
+		submitBtn.style.width = '7.5em';
 		submitBtn.value = 'Submit Project';
 
 		resetBtn.setAttribute('id', 'resetBtn');
 		resetBtn.setAttribute('type', 'button');
-		resetBtn.style.margin = 'auto';
+		resetBtn.style.margin = 'auto 2%';
+		resetBtn.style.padding = '0px';
 		resetBtn.style.fontSize = '16px';
 		resetBtn.style.height = '2em';
+		resetBtn.style.width = '7.5em';
 		resetBtn.value = 'Reset';
 
 		resetBtn.onclick = () => {
@@ -357,7 +368,7 @@ $(function() {
 		};
 
 		fieldSet.appendChild(formBtnContainer);
-		formBtnContainer.append(submitBtn);
 		formBtnContainer.append(resetBtn);
+		formBtnContainer.append(submitBtn);
 	}
 });

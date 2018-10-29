@@ -2,9 +2,7 @@ import '..';
 
 export const pfModule = (() => {
 	const projectFactory = (title, description, dueDate, priority) => {
-		const dateCreated = new Date().toLocaleDateString('en-US');
-
-		return { title, description, dateCreated, dueDate, priority };
+		return { title, description, dueDate, priority };
 	};
 
 	let myProjects = [];
@@ -45,10 +43,3 @@ export const pfModule = (() => {
 
 	return { myProjects: myProjects, projectFactory: projectFactory };
 })();
-
-/* document.getElementsByTagName('body').onload = myProjects.push(
-    groceries,
-    cleanHouse,
-    laundry,
-    rent
-); */
